@@ -672,7 +672,7 @@ int main(int argc, char * argv[]){
 		double cnt1=0,cnt2=0,cnt3=0;
 		// cal interweaved inner product
 		//s = clock();
-		double kernel_inter[cnt_a][cnt_b];
+		//double kernel_inter[cnt_a][cnt_b];
 		for(int i=0;i<cnt_a;i++)
 			for(int j=0;j<cnt_b;j++)
 			{
@@ -690,18 +690,21 @@ int main(int argc, char * argv[]){
 		cout<<"product is:";
 		product.display();
 		*/
-				kernel_inter[i][j] = product.p[0]; 
+		//		kernel_inter[i][j] = product.p[0]; 
 			}
 		//t = clock();
 		//cout<<setprecision(2)<<double(t-s)/CLOCKS_PER_SEC<<endl;
 		//cout<<"M: "<<M.m<<" "<<M.n<<endl;
-		//call inner products of alice's data
+		/**
+		 * cal inner products of alice's data
+		 */
 		matrix Ma = load("../alice/Ma.csv");
 		
 		//int cnt_aa=0;
 		//s = clock();
 		//cout<<"Ma: "<<Ma.m<<" "<<Ma.n<<endl;
-		double kernel_alice[cnt_a][cnt_a];
+		double cnta1=0,cnta2=0,cnta3=0;
+		//double kernel_alice[cnt_a][cnt_a];
 		for(int i=0;i<cnt_a;i++)
 		{
 			for(int j=i;j<cnt_a;j++)
@@ -709,14 +712,14 @@ int main(int argc, char * argv[]){
 		//	cnt_aa++;
 			s1 = clock();
 			matrix cp = vectorize(cipher_matrix1[i]*transpose(cipher_matrix1[j]))/w;
-			cnt1 += double(clock()-s1)/CLOCKS_PER_SEC;
+			cnta1 += double(clock()-s1)/CLOCKS_PER_SEC;
 			s1 = clock();
 			matrix newc = keySwitch(Ma,cp);
-			cnt2 += double(clock()-s1)/CLOCKS_PER_SEC;
+			cnta2 += double(clock()-s1)/CLOCKS_PER_SEC;
 			s1 = clock();
 			matrix product = decrypt(Snew,newc,w);
-			kernel_alice[i][j] = product.p[0];
-			cnt3 += double(clock()-s1)/CLOCKS_PER_SEC;
+		//	kernel_alice[i][j] = product.p[0];
+			cnta3 += double(clock()-s1)/CLOCKS_PER_SEC;
 			}
 		}
 		//t = clock();
@@ -726,7 +729,8 @@ int main(int argc, char * argv[]){
 		//call inner products of bob's data
 		matrix Mb = load("../bob/Mb.csv");
 		//s = clock();
-		double kernel_bob[cnt_b][cnt_b];
+		double cntb1=0,cntb2=0,cntb3=0;
+		//double kernel_bob[cnt_b][cnt_b];
 		for(int i=0;i<cnt_b;i++)
 		{
 			for(int j=i;j<cnt_b;j++)
@@ -734,19 +738,22 @@ int main(int argc, char * argv[]){
 			//cnt_bb++;
 			s1 = clock();
 			matrix cp = vectorize(cipher_matrix2[i]*transpose(cipher_matrix2[j]))/w;
-			cnt1 += double(clock()-s1)/CLOCKS_PER_SEC;
+			cntb1 += double(clock()-s1)/CLOCKS_PER_SEC;
 			s1 = clock();
 			matrix newc = keySwitch(Mb,cp);
-			cnt2 += double(clock()-s1)/CLOCKS_PER_SEC;
+			cntb2 += double(clock()-s1)/CLOCKS_PER_SEC;
 			s1 = clock();
 			matrix product = decrypt(Snew,newc,w);
-			kernel_bob[i][j] = product.p[0];
-			cnt3 += double(clock()-s1)/CLOCKS_PER_SEC;
+		//	kernel_bob[i][j] = product.p[0];
+			cntb3 += double(clock()-s1)/CLOCKS_PER_SEC;
 			}
 		}
-		cout<<setprecision(2)<<cnt1<<endl;
-		cout<<setprecision(2)<<cnt2<<endl;
+		cout<<setprecision(2)<<cnt1+cnt2<<endl;
 		cout<<setprecision(2)<<cnt3<<endl;
+		cout<<setprecision(2)<<cnta1+cnta2<<endl;
+		cout<<setprecision(2)<<cnta3<<endl;
+		cout<<setprecision(2)<<cntb1+cntb2<<endl;
+		cout<<setprecision(2)<<cntb3<<endl;
 		//t = clock();
 		//cout<<setprecision(2)<<double(t-s)/CLOCKS_PER_SEC<<endl;
 		//cout<<cnt<<endl;

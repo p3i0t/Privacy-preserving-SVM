@@ -26,30 +26,32 @@ for ele in encrypt_results:
 	#x.append(ele[0])
 	time = list(ele)
 	enc_time.append(time[0])
-	'''	
+	
 	M_time.append(time[1])	
+	
 	inter_dec_time.append(time[2])	
 	alice_dec_time.append(time[3])	
 	bob_dec_time.append(time[4])	
 	total_dec_time.append(time[2]+time[3]+time[4])
-	'''
-	inner_time.append(time[1])
-	trans_time.append(time[2])
-	dec_time.append(time[3])
+	
+	#inner_time.append(time[2])
+	#trans_time.append(time[2])
+	dec_time.append(time[5])
 plt.xlabel('Dimension of Plaintext')
 plt.ylabel('Time comsumed/s')
 #plt.title('Performance Comparison of Encryption')
 plt.title('Performance of System')
 plt.plot(x,enc_time,marker='o',linestyle='--',color='r',label="encryption")
-'''
+
 plt.plot(x,M_time,marker='^',linestyle='-.',color='blue',label="M generation")
-plt.plot(x,inter_dec_time,marker='+',linestyle='-.',color='blue',label="dot production(inter)")
-plt.plot(x,alice_dec_time,marker='1',linestyle='-.',color='black',label="dot production(alice)")
-plt.plot(x,bob_dec_time,marker='*',linestyle='-.',color='green',label="dot production(bob)")
-plt.plot(x,total_dec_time,marker='D',linestyle='-.',color='purple',label="dot production(total)")
-'''
-plt.plot(x,inner_time,marker='+',linestyle='-.',color='blue',label="inner")
-plt.plot(x,trans_time,marker='D',linestyle='-.',color='black',label="transform")
+
+plt.plot(x,inter_dec_time,marker='+',linestyle='-.',color='blue',label="inner production(inter)")
+plt.plot(x,alice_dec_time,marker='1',linestyle='-.',color='black',label="inner production(alice)")
+plt.plot(x,bob_dec_time,marker='*',linestyle='-.',color='green',label="inner production(bob)")
+plt.plot(x,total_dec_time,marker='D',linestyle='-.',color='purple',label="inner production(total)")
+
+#plt.plot(x,inner_time,marker='+',linestyle='-.',color='blue',label="inner product")
+#plt.plot(x,trans_time,marker='D',linestyle='-.',color='black',label="transform")
 plt.plot(x,dec_time,marker='*',linestyle='-.',color='green',label="decryption")
 
 plt.axis([0,50,0,60])
